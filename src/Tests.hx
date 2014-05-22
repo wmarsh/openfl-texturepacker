@@ -24,39 +24,102 @@ import com.marshgames.openfltexturepacker.TexturePackerImport;
 
 class TexturePackerTests extends haxe.unit.TestCase 
 {
+	private var stage:flash.display.Stage;
 	private var frames:Array<TexturePackerFrame>;
+	private var tilesheet:Tilesheet;
+	private var idMap:Map<String, Int>;
+
+	override public function new(stage:flash.display.Stage)
+	{
+		this.stage = stage;
+		super();
+	}
 
 	override public function setup() 
 	{
 		frames = TexturePackerImport.parseJson(
-			haxe.Resource.getString("sheetJson")
+			openfl.Assets.getText("assets/sheet.json")
 		);
+
+		tilesheet = new Tilesheet(
+			openfl.Assets.getBitmapData("assets/sheet.png")
+		);
+
+		idMap = TexturePackerImport.addToTilesheet(tilesheet, frames);
+    }
+
+    public function testDrawing()
+    {
+    	var sprite:flash.display.Sprite = new flash.display.Sprite();
+    	stage.addChild(sprite);
+
+    	tilesheet.drawTiles(sprite.graphics, [0, 0, idMap["Sprite3Bordered.png"]]);
+    	tilesheet.drawTiles(sprite.graphics, [0, 0, idMap["Sprite3.png"]], false, Tilesheet.TILE_BLEND_ADD);
+
+    	tilesheet.drawTiles(sprite.graphics, [256, 0, idMap["Sprite1.png"]]);
+    	tilesheet.drawTiles(sprite.graphics, [0, 256, idMap["Sprite2.png"]]);
+
+    	assertTrue(true);
+    }
+
+    public function testRotatedDrawing()
+    {
+    	var sprite:flash.display.Sprite = new flash.display.Sprite();
+    	stage.addChild(sprite);
+
+    	var angle:Float = Math.PI;
+
+    	tilesheet.drawTiles(
+    		sprite.graphics,
+    		[
+    			510, 510, idMap["Sprite3Bordered.png"], angle
+    		],
+    		true,
+    		Tilesheet.TILE_ROTATION
+    	);
+
+    	tilesheet.drawTiles(
+    		sprite.graphics,
+    		[
+    			510, 510, idMap["Sprite3.png"], angle
+    		],
+    		true,
+    		Tilesheet.TILE_ROTATION | Tilesheet.TILE_BLEND_ADD
+    	);
+
+    	assertTrue(true);
     }
 
     public function testFrameCount()
     {
-    	assertEquals(3, frames.length);
+    	assertEquals(4, frames.length);
     }
 
     public function testFrame1()
     {
-    	// "Sprite1.png":
-		// {
-		// 	"frame": {"x":70,"y":92,"w":36,"h":86},
-		// 	"rotated": false,
-		// 	"trimmed": true,
-		// 	"spriteSourceSize": {"x":108,"y":87,"w":36,"h":86},
-		// 	"sourceSize": {"w":256,"h":256}
-		// },
+		// "frame": {"x":70,"y":350,"w":36,"h":86},
+		// "rotated": false,
+		// "trimmed": true,
+		// "spriteSourceSize": {"x":108,"y":87,"w":36,"h":86},
+		// "sourceSize": {"w":256,"h":256}
+		var frame:TexturePackerFrame = null;
+		for (candidate in frames)
+		{
+			if ("Sprite1.png" == candidate.name)
+			{
+				frame = candidate;
+				break;
+			}
+		}
 
-		var frame:TexturePackerFrame = frames[0];
+		assertTrue(frame != null);
 
 		// Name
 		assertEquals(frame.name, "Sprite1.png");
 		
 		// Frame dimensions
 		assertEquals(frame.frame.x, 70);
-		assertEquals(frame.frame.y, 92);
+		assertEquals(frame.frame.y, 350);
 		assertEquals(frame.frame.w, 36);
 		assertEquals(frame.frame.h, 86);
 
@@ -79,13 +142,16 @@ class TexturePackerTests extends haxe.unit.TestCase
 }
 
 // Runner
-class Tests 
+class Tests extends flash.display.Sprite
 {
-    static function main()
+    public function new()
     {
-        var r = new haxe.unit.TestRunner();
-        r.add(new TexturePackerTests());
+    	// addEventListener(flash.events.Event.ADDED_TO_STAGE, function(e):Void{
+    		var r = new haxe.unit.TestRunner();
+	        r.add(new TexturePackerTests(stage));
+	        r.run();
+    	// });
 
-        r.run();
+    	super();
     }
 }

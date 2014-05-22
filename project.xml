@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	
+	<meta title="test" package="com.marshgames.openfltexturepacker" version="1.0.0" company="Marsh Games" />
+	<app main="Tests" path="Export" file="test" />
+	
+	<source path="src" />
+
+	<assets path="TestData/Sheet/" include="*" rename="assets" />
+
+	<haxelib name="openfl" />
+
+</project>

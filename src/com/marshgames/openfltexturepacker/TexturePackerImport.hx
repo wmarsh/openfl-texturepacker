@@ -20,8 +20,9 @@
 
 package com.marshgames.openfltexturepacker;
 
-// User types
+import openfl.display.Tilesheet;
 
+// User types
 typedef TexturePackerFrame =
 {
 	name:String,
@@ -70,6 +71,37 @@ class TexturePackerImport
 		}
 
 		return frames;
+	}
+
+	public static function addToTilesheet(tilesheet:Tilesheet, frames:Array<TexturePackerFrame>):Map<String, Int>
+	{
+		var idMap:Map<String, Int> = new Map<String, Int>();
+
+		for (i in 0...frames.length)
+		{
+			var frame = frames[i];
+			
+			var center = new flash.geom.Point(0, 0);
+
+			if (frame.trimmed)
+			{
+				// Calculate adjusted center for trimmed sprite
+				center.x -= frame.spriteSourceSize.x;
+				center.y -= frame.spriteSourceSize.y;
+			}
+
+			var id = tilesheet.addTileRect(
+				new flash.geom.Rectangle(
+					frame.frame.x, frame.frame.y,
+					frame.frame.w, frame.frame.h
+				),
+				center
+			);
+
+			idMap[frame.name] = id;
+		}
+
+		return idMap;
 	}
 }
 

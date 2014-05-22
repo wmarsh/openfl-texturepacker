@@ -2,7 +2,7 @@
 
 "Sprite1.png":
 {
-	"frame": {"x":70,"y":92,"w":36,"h":86},
+	"frame": {"x":70,"y":350,"w":36,"h":86},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":108,"y":87,"w":36,"h":86},
@@ -10,7 +10,7 @@
 },
 "Sprite2.png":
 {
-	"frame": {"x":2,"y":92,"w":66,"h":86},
+	"frame": {"x":2,"y":350,"w":66,"h":86},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":92,"y":88,"w":66,"h":86},
@@ -18,10 +18,18 @@
 },
 "Sprite3.png":
 {
-	"frame": {"x":2,"y":2,"w":68,"h":88},
+	"frame": {"x":2,"y":260,"w":68,"h":88},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":89,"y":86,"w":68,"h":88},
+	"sourceSize": {"w":256,"h":256}
+},
+"Sprite3Bordered.png":
+{
+	"frame": {"x":2,"y":2,"w":256,"h":256},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
 	"sourceSize": {"w":256,"h":256}
 }},
 "meta": {
@@ -29,8 +37,8 @@
 	"version": "1.0",
 	"image": "sheet.png",
 	"format": "RGBA8888",
-	"size": {"w":256,"h":256},
+	"size": {"w":512,"h":512},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:b51df3d981f5f2a6745c08f01ed3ad09:3f7dc39ee03baaa062a3febd10e8a2ec:9c44ecd7e9a522007eaff2949095bc1d$"
+	"smartupdate": "$TexturePacker:SmartUpdate:a0fc4d731d76af00d42f16856400be7e:a61d57e699ecf89ea90bf18ce3b60723:9c44ecd7e9a522007eaff2949095bc1d$"
 }
 }
