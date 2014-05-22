@@ -1,0 +1,10 @@
+# Source folders and libs
+-cp src
+-lib openfl
+
+# Resources
+-resource TestData/Sheet/sheet.json@sheetJson
+
+# Target
+-neko tests.n 
+-main Tests
